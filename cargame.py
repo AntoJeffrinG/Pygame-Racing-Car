@@ -9,6 +9,11 @@ pygame.init()
 
 pygame.mixer.init()
 
+#adding the bg music
+crash_sound = pygame.mixer.Sound("assets/carCrash.wav")
+pygame.mixer.music.load("assets/bgMusic.mp3")
+pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.play(-1)
 
 class Game:
     FPS = 60  # set also game speed, the higher the value the faster the game
@@ -131,6 +136,7 @@ class Game:
 
             # If Cars collide game ends
             if self.car2_loc.colliderect(self.car_loc):
+                pygame.mixer.music.fadeout(500)#bg music fades out for crash music
                 self.car_crash_sound.play()
                 self.game_state = "GAME OVER"
 
@@ -379,6 +385,11 @@ class Game:
         self.message_display(
             "(Space to restart)", self.score_font, (80, 80, 80), self.SCREEN_WIDTH / 2, 600
         )
+        
+        # Resume music if not already playing and game is not paused
+        if not pygame.mixer.music.get_busy() and not self.game_paused:
+            pygame.mixer.music.play(-1)
+
 
     def game_paused_draw(self):
         self.message_display(
@@ -423,6 +434,8 @@ class Game:
         self.car2_loc.center = (self.left_lane, self.SCREEN_HEIGHT * 0.2)
         self.car_lane = "R"
         self.car2_lane = "L"
+        pygame.mixer.music.play(-1)
+
         print("Restart!")
 
     @staticmethod

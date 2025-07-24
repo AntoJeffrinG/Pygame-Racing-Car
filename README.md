@@ -53,7 +53,7 @@ To run and test the code, enter this line:
 ```
 python3 cargame.py
 ```
-That's it! Now you can get started on developing.
+That's it! Now you can get started on developing this game into a beast!
 
 ## Issues and Feedback
 
